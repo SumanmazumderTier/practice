@@ -29,20 +29,30 @@ form.addEventListener('keyup', () => {
 
 const tabs = document.querySelector('.tabs');
 function displayMenuButton(){
-    let categories = allProducts.reduce((value, item)=>{
-        if(!value.includes(item.category)){
-            value.push(item.category);
-        }
-        return value;
-    }, ["all"]);
+    // let categories = allProducts.reduce((value, item)=>{
+    //     if(!value.includes(item.category)){
+    //         value.push(item.category);
+    //     }
+    //     return value;
+    // }, ["all"]);
     // console.log(categories);
-
-    let categoryBtn = categories.map((item)=>{
-        // console.log(item);
-        return `<button class="filter-btn" data-id=${item}>${item}</button>`
-    }).join("");
+    // let categoryBtn = categories.map((item)=>{
+    //     // console.log(item);
+    //     return `<button class="filter-btn" data-id=${item}>${item}</button>`
+    // }).join("");
     // console.log(categoryBtn);
-    tabs.innerHTML = categoryBtn;
+    // tabs.innerHTML = categoryBtn;
+
+    let categories = allProducts.filter((item, index)=>{
+       if(item.category == ""){
+        return
+       }else{
+        //    console.log(index);
+           return index == allProducts.findIndex(ele=> ele.category == item.category)
+       }
+    },[{category: 'all'}]).map(ele=> `<button class="filter-btn" data-id=${ele.category}>${ele.category}</button>`).join('');
+    console.log(categories);
+    tabs.innerHTML = categories;
 
     const filterBtns = tabs.querySelectorAll(".filter-btn");
     filterBtns.forEach((btn)=>{
